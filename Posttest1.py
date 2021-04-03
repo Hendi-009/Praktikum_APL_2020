@@ -16,7 +16,6 @@ def menu():
     print("[5] Max dan Min Data")
     print("[6] Banyak Data")
     print("[0] Exit")
-
     pilih_menu = str(input("Pilih MENU : "))
 
     if (pilih_menu == "1"):
@@ -50,7 +49,15 @@ def menu():
     elif (pilih_menu == "2"):
         bersihin_layar()
         print("[1] Ubah Elemen Didalam List")
-        update_data(angka)
+        print("[2] Kembali")
+        pilih_menu = str(input("Pilih : "))
+        if (pilih_menu == "1"):
+            update_data(angka)
+        elif (pilih_menu == "2"):
+            balik_menu()
+        else:
+            print("Kamu memilih menu yang salah")
+            balik_menu()
     elif (pilih_menu == "3"):
         bersihin_layar()
         print("[1] Hapus Semua Item Di List")
@@ -76,9 +83,11 @@ def menu():
         print("[3] Kembali")
         pilih_menu = str(input("Pilih : "))
         if (pilih_menu == "1"):
-            ascen()
+            print("Ascending : ",ascen(angka))
+            balik_menu()
         elif (pilih_menu == "2"):
-            descen()
+            print("Descending : ",descen(angka))
+            balik_menu()
         elif (pilih_menu == "3"):
             balik_menu()
         else:
@@ -101,8 +110,7 @@ def menu():
             balik_menu()
     elif (pilih_menu == "6"):
         bersihin_layar()
-        print("[1] Banyak Elemen Didalam List")
-        banyak_data()
+        print("Banyak elemen didalam list : ", banyak_data())
     elif (pilih_menu == "0"):
         exit()
     else:
@@ -145,7 +153,6 @@ def update_data(angka):
     balik_menu()
 
 #Hapus Data
-
 def clr():
     angka.clear()
     print(angka)
@@ -163,25 +170,66 @@ def rmv():
     print(angka)
     balik_menu()
 
-#Urut Data
-def ascen():
-    angka.sort()
-    print(angka)
-    balik_menu()
+#Urut Data MergeSort
+def ascen(L):
+    merge = []
+    if len(L) == 1:
+        return L
+    mid = len(L) // 2
+    list1 = ascen(L[:mid])
+    list2 = ascen(L[mid:])
 
-def descen():
-    angka.reverse()
-    print(angka)
-    balik_menu()
+    x, y = 0, 0
+    while x < len(list1) and y < len(list2):
+        if list1[x] > list2[y]:
+            merge.append(list2[y])
+            y = y + 1
+        else:
+            merge.append(list1[x])
+            x = x + 1
+    hasil = merge + list1[x:]
+
+    hasil = hasil + list2[y:]
+
+    return hasil
+
+def descen(L):
+    merge = []
+    if len(L) == 1:
+        return L
+    mid = len(L) // 2
+    list1 = descen(L[:mid])
+    list2 = descen(L[mid:])
+
+    x, y = 0, 0
+    while x < len(list1) and y < len(list2):
+        if list1[x] < list2[y]:
+            merge.append(list2[y])
+            y = y + 1
+        else:
+            merge.append(list1[x])
+            x = x + 1
+    hasil = merge + list1[x:]
+
+    hasil = hasil + list2[y:]
+
+    return hasil
 
 #MaxMin
-
 def Max():
-    print(max(angka))
+    maxi = angka[0]
+    for i in angka:
+        if(maxi < i):
+            maxi = i
+    print("Max : ", maxi)
     balik_menu()
 
 def Min():
-    print(min(angka))
+    min = angka[0]
+    for i in angka:
+        if (min > i):
+            min = i
+    print("Min : ", min)
     balik_menu()
 
 #Banyak Data
